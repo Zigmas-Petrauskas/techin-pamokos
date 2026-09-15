@@ -1,0 +1,17 @@
+{
+  "name": "pamoka_2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "is-even": "^1.0.0",
+    "is-odd": "^3.0.1"
+  }
+}
