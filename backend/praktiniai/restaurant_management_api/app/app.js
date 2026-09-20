@@ -1,24 +1,11 @@
-import http from "node:http";
-import { restaurantName, city, isOpen } from "./restaurant.js";
+import express from "express";
 
-const server = http.createServer((req, res) => {
-  if (req.method === "GET" && req.url === "/restaurant") {
-    const restaurant = {
-      restaurantName,
-      city,
-      isOpen,
-    };
+const app = express();
 
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "application/json");
-    res.end(JSON.stringify(restaurant));
-
-    return;
-  }
-
-  res.statusCode = 404;
-  res.setHeader("Content-TYpe", "text/plain");
-  res.end("Not Found");
+app.get("/health", (req, res) => {
+  res.send("OK");
 });
 
-server.listen(3000);
+app.listen(3000, () => {
+  console.log("serveris veikia http://localhost:3000");
+});
