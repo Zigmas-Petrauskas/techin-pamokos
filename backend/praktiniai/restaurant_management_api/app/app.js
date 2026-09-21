@@ -1,7 +1,12 @@
 // Importuojame Express ir routerius
+import "dotenv/config";
 import express from "express";
 import menusRouter from "./routes/menus.js";
 import restaurantsRouter from "./routes/restaurants.js";
+
+const port = Number(process.env.PORT);
+const host = process.env.HOST;
+const nodeEnv = process.env.NODE_ENV;
 
 // Sukuriame Express aplikaciją
 const app = express();
@@ -28,6 +33,7 @@ app.get("/health", (req, res) => {
 });
 
 // Paleidžiame serverį 3000 prievadu
-app.listen(3000, () => {
-  console.log("serveris veikia http://localhost:3000");
+app.listen(port, () => {
+  console.log(` Server running on http:// ${host}:${port}`);
+  console.log(`Enviroment: ${nodeEnv}`);
 });
