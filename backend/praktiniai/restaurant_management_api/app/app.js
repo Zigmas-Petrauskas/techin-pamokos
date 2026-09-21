@@ -4,6 +4,7 @@ import express from "express";
 import menusRouter from "./routes/menus.js";
 import restaurantsRouter from "./routes/restaurants.js";
 
+// Gauname aplinkos kintamuosius iš .env failo
 const port = Number(process.env.PORT);
 const host = process.env.HOST;
 const nodeEnv = process.env.NODE_ENV;
@@ -32,7 +33,7 @@ app.get("/health", (req, res) => {
   res.send("OK");
 });
 
-// Paleidžiame serverį 3000 prievadu
+// Paleidžiame serverį
 app.listen(port, () => {
   console.log(` Server running on http:// ${host}:${port}`);
   console.log(`Enviroment: ${nodeEnv}`);
