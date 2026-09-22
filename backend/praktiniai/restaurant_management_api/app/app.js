@@ -1,6 +1,7 @@
 // Importuojame Express ir routerius
 import "dotenv/config";
 import express from "express";
+import healthRouter from "./routes/health.js";
 import menusRouter from "./routes/menus.js";
 import restaurantsRouter from "./routes/restaurants.js";
 
@@ -25,16 +26,12 @@ const requestLogger = (req, res, next) => {
 app.use(requestLogger);
 
 // Prijungiame routerius
+app.use("/health", healthRouter);
 app.use("/menu", menusRouter);
 app.use("/restaurant", restaurantsRouter);
 
-// Patikriname, ar serveris veikia
-app.get("/health", (req, res) => {
-  res.send("OK");
-});
-
 // Paleidžiame serverį
 app.listen(port, () => {
-  console.log(` Server running on http:// ${host}:${port}`);
-  console.log(`Enviroment: ${nodeEnv}`);
+  console.log(`Server running on http://${host}:${port}`);
+  console.log(`Environment: ${nodeEnv}`);
 });
