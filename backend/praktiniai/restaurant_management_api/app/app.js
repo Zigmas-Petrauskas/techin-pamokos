@@ -4,6 +4,7 @@ import express from "express";
 import healthRouter from "./routes/health.js";
 import menusRouter from "./routes/menus.js";
 import restaurantsRouter from "./routes/restaurants.js";
+import categoriesRouter from "./routes/categories.js";
 
 // Gauname aplinkos kintamuosius iš .env failo
 const port = Number(process.env.PORT);
@@ -29,6 +30,7 @@ app.use(requestLogger);
 app.use("/health", healthRouter);
 app.use("/menu", menusRouter);
 app.use("/restaurant", restaurantsRouter);
+app.use("/categories", categoriesRouter);
 
 // Paleidžiame serverį
 app.listen(port, () => {

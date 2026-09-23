@@ -1,67 +1,114 @@
 import express from "express";
-import { menuItems } from "../data.js";
+import pool from "../db.js";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.json(menuItems);
+// Gauname visus meniu elementus kartu su jų kategorijomis
+router.get("/", async (req, res) => {
+  const result = await pool.query(`
+    SELECT
+      menu_items.id,
+      menu_items.name,
+      menu_items.price,
+      menu_items.available,
+      menu_items.category_id,
+      categories.name AS category_name
+    FROM menu_items
+    JOIN categories
+      ON menu_items.category_id = categories.id
+    ORDER BY menu_items.id
+  `);
+
+  res.json(result.rows);
 });
 
-router.get("/:id", (req, res) => {
-  const id = Number(req.params.id);
+// Gauname vieną meniu elementą pagal ID kartu su jo kategorija
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
 
-  const menuItem = menuItems.find((item) => item.id === id);
+  // Ieškome meniu elemento ir gauname jo kategorijos pavadinimą
+  const result = await pool.query(
+    `SELECT
+      menu_items.id,
+      menu_items.name,
+      menu_items.price,
+      menu_items.available,
+      menu_items.category_id,
+      categories.name AS category_name
+    FROM menu_items
+    JOIN categories ON menu_items.category_id = categories.id
+    WHERE menu_items.id = $1`,
+    [id],
+  );
 
-  if (!menuItem) {
-    res.status(400).json({ message: "Menu item not find" });
+  // Jei meniu elementas nerastas, grąžiname 404
+  if (result.rows.length === 0) {
+    return res.status(404).json({ message: "Menu item not found" });
   }
 
-  res.json(menuItem);
+  // Grąžiname rastą meniu elementą
+  res.json(result.rows[0]);
 });
 
-router.post("/", (req, res) => {
-  const newItem = {
-    id: menuItems[menuItems.length - 1].id + 1,
-    name: req.body.name,
-    category: req.body.category,
-    price: req.body.price,
-    available: req.body.available,
-  };
+// Sukuriame naują meniu elementą
+router.post("/", async (req, res) => {
+  const { name, categoryId, price, available } = req.body;
 
-  menuItems.push(newItem);
+  // Įrašome naują meniu elementą į duomenų bazę
+  const result = await pool.query(
+    `INSERT INTO menu_items (name, category_id, price, available)
+     VALUES ($1, $2, $3, $4)
+     RETURNING *`,
+    [name, categoryId, price, available],
+  );
 
-  res.status(201).json(newItem);
+  // Grąžiname sukurtą meniu elementą
+  res.status(201).json(result.rows[0]);
 });
 
-router.put("/:id", (req, res) => {
-  const id = Number(req.params.id);
+// Atnaujiname meniu elementą pagal ID
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { name, categoryId, price, available } = req.body;
 
-  const menuItem = menuItems.find((item) => item.id === id);
+  // Atnaujiname meniu elemento duomenis ir jo kategoriją
+  const result = await pool.query(
+    `UPDATE menu_items
+     SET name = $1,
+         category_id = $2,
+         price = $3,
+         available = $4
+     WHERE id = $5
+     RETURNING *`,
+    [name, categoryId, price, available, id],
+  );
 
-  if (!menuItem) {
-    res.status(404).json({ message: "Menu item not found" });
+  // Jei meniu elementas nerastas, grąžiname 404
+  if (result.rows.length === 0) {
+    return res.status(404).json({ message: "Menu item not found" });
   }
 
-  menuItem.name = req.body.name;
-  menuItem.category = req.body.category;
-  menuItem.price = req.body.price;
-  menuItem.available = req.body.available;
-
-  res.json(menuItem);
+  // Grąžiname atnaujintą meniu elementą
+  res.json(result.rows[0]);
 });
 
-router.delete("/:id", (req, res) => {
-  const id = Number(req.params.id);
+// Pašaliname meniu elementą pagal ID
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
 
-  const menuItemIndex = menuItems.findIndex((item) => item.id === id);
+  // Pašaliname meniu elementą iš duomenų bazės
+  const result = await pool.query(
+    "DELETE FROM menu_items WHERE id = $1 RETURNING *",
+    [id],
+  );
 
-  if (menuItemIndex === -1) {
-    res.status(404).json({ message: "Menu item not found" });
+  // Jei meniu elementas nerastas, grąžiname 404
+  if (result.rows.length === 0) {
+    return res.status(404).json({ message: "Menu item not found" });
   }
 
-  const deletedItem = menuItems.splice(menuItemIndex, 1)[0];
-
-  res.json(deletedItem);
+  // Grąžiname pašalintą meniu elementą
+  res.json(result.rows[0]);
 });
 
 export default router;
