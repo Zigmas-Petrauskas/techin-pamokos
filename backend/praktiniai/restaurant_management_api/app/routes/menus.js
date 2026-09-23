@@ -52,7 +52,17 @@ router.get("/:id", async (req, res) => {
 
 // Sukuriame naują meniu elementą
 router.post("/", async (req, res) => {
-  const { name, categoryId, price, available } = req.body;
+  const { name, category, price, available } = req.body; // pakeista categoryId į category
+
+  // Kategorijos ID paieška pagal pavadinimą
+  // Surandama kategorija pagal pavadinimą
+  const categoryResult = await pool.query(
+    "SELECT id FROM categories WHERE name = $1",
+    [category],
+  );
+
+  // Iš rastos kategorijos pasiimame ID naujam meniu elementui
+  const categoryId = categoryResult.rows[0].id;
 
   // Įrašome naują meniu elementą į duomenų bazę
   const result = await pool.query(
