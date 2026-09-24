@@ -1,7 +1,9 @@
 # Environment variables
-.env.*
 .env
-node_modules
+.env.*
 
+# Dependencies
+node_modules/
 
-!.env.exmple
+# Leidžiame .env.example kelti į GitHub
+!.env.example

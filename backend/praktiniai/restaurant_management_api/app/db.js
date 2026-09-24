@@ -1,12 +1,16 @@
 import { Pool } from "pg";
+import config from "./config.js";
+
+// Gauname PostgreSQL nustatymus iš bendros konfigūracijos
+const { host, port, database, user, password } = config.db;
 
 // Sukuriame bendrą PostgreSQL prisijungimų pool
 const pool = new Pool({
-  host: process.env.PGHOST,
-  port: Number(process.env.PGPORT) || 5432,
-  database: process.env.PGDATABASE,
-  user: process.env.PGUSER,
-  password: process.env.PGPASSWORD,
+  host,
+  port,
+  database,
+  user,
+  password,
 });
 
 // Apdorojame netikėtas PostgreSQL prisijungimų pool klaidas

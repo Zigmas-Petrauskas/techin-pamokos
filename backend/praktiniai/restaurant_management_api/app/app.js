@@ -1,15 +1,14 @@
 // Importuojame Express ir routerius
-import "dotenv/config";
+import config from "./config.js";
 import express from "express";
 import healthRouter from "./routes/health.js";
 import menusRouter from "./routes/menus.js";
 import restaurantsRouter from "./routes/restaurants.js";
 import categoriesRouter from "./routes/categories.js";
 
-// Gauname aplinkos kintamuosius iš .env failo
-const port = Number(process.env.PORT);
-const host = process.env.HOST;
-const nodeEnv = process.env.NODE_ENV;
+// Gauname aplikacijos nustatymus iš bendros konfigūracijos
+const { port, host } = config.app;
+const { environment } = config;
 
 // Sukuriame Express aplikaciją
 const app = express();
@@ -35,5 +34,5 @@ app.use("/categories", categoriesRouter);
 // Paleidžiame serverį
 app.listen(port, () => {
   console.log(`Server running on http://${host}:${port}`);
-  console.log(`Environment: ${nodeEnv}`);
+  console.log(`Environment: ${environment}`);
 });

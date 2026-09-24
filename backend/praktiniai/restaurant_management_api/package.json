@@ -6,6 +6,9 @@
   "scripts": {
     "start": "node app/app.js",
     "dev": "cross-env NODE_ENV=development node --watch app/app.js",
+    "test": "cross-env NODE_ENV=test node app/app.js",
+    "staging": "cross-env NODE_ENV=staging node app/app.js",
+    "production": "cross-env NODE_ENV=production node app/app.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
