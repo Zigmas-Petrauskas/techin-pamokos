@@ -1,10 +1,10 @@
 // Importuojame Express ir routerius
-import config from "./config.js";
+import config from "./core/config.js";
 import express from "express";
-import healthRouter from "./routes/health.js";
-import menusRouter from "./routes/menus.js";
-import restaurantsRouter from "./routes/restaurants.js";
-import categoriesRouter from "./routes/categories.js";
+import categoriesRouter from "./presentation/routes/categories.js";
+import healthRouter from "./presentation/routes/health.js";
+import menusRouter from "./presentation/routes/menus.js";
+import restaurantsRouter from "./presentation/routes/restaurants.js";
 
 // Gauname aplikacijos nustatymus iš bendros konfigūracijos
 const { port, host } = config.app;

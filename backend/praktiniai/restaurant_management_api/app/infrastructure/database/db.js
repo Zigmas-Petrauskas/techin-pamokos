@@ -1,5 +1,5 @@
 import { Pool } from "pg";
-import config from "./config.js";
+import config from "../../core/config.js";
 
 // Gauname PostgreSQL nustatymus iš bendros konfigūracijos
 const { host, port, database, user, password } = config.db;

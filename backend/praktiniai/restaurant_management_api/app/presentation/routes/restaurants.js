@@ -1,6 +1,6 @@
 // Importuojame Express ir restorano duomenis
 import express from "express";
-import { restaurantName, city, isOpen } from "../restaurant.js";
+import { restaurantName, city, isOpen } from "../../restaurant.js";
 
 // Sukuriame restorano maršrutų routerį
 const router = express.Router();
