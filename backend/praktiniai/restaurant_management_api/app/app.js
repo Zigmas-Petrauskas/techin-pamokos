@@ -31,6 +31,15 @@ app.use("/api/v1/menu", menusRouter);
 app.use("/restaurant", restaurantsRouter);
 app.use("/api/v1/categories", categoriesRouter);
 
+// Centralizuotai apdorojame aplikacijos klaidas
+app.use((err, req, res, next) => {
+  void next;
+
+  return res.status(err.status || 500).json({
+    error: err.message,
+  });
+});
+
 // Paleidžiame serverį
 app.listen(port, () => {
   console.log(`Server running on http://${host}:${port}`);
