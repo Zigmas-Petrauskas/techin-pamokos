@@ -27,9 +27,9 @@ app.use(requestLogger);
 
 // Prijungiame routerius
 app.use("/health", healthRouter);
-app.use("/menu", menusRouter);
+app.use("/api/v1/menu", menusRouter);
 app.use("/restaurant", restaurantsRouter);
-app.use("/categories", categoriesRouter);
+app.use("/api/v1/categories", categoriesRouter);
 
 // Paleidžiame serverį
 app.listen(port, () => {

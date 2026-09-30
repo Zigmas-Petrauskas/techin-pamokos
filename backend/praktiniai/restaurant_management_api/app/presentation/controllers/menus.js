@@ -6,9 +6,21 @@ import {
   updateMenuItem as updateMenuItemService,
 } from "../../application/services/menus.js";
 
-// Gauname visus meniu elementus
+// Gauname meniu elementus pagal perduotus query parametrus
 export const getMenuItems = async (req, res) => {
-  const menuItems = await getMenuItemsService();
+  const { category, available, search, sort, order, limit, offset } = req.query;
+
+  const filters = {
+    category,
+    available,
+    search,
+    sort,
+    order,
+    limit,
+    offset,
+  };
+
+  const menuItems = await getMenuItemsService(filters);
 
   res.json(menuItems);
 };
@@ -28,9 +40,22 @@ export const getMenuItemById = async (req, res) => {
 
 // Sukuriame naują meniu elementą
 export const createMenuItem = async (req, res) => {
-  const menuItem = await createMenuItemService(req.body);
+  try {
+    const menuItem = await createMenuItemService(req.body);
 
-  res.status(201).json(menuItem);
+    res.status(201).json(menuItem);
+  } catch (err) {
+    if (err.code === "INVALID_CATEGORY" || err.code === "INVALID_PRICE") {
+      return res.status(err.status).json({
+        error: {
+          code: err.code,
+          message: err.message,
+        },
+      });
+    }
+
+    throw err;
+  }
 };
 
 // Atnaujiname meniu elementą pagal ID

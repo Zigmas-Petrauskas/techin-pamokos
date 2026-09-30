@@ -13,6 +13,11 @@ export const findById = async (id) => {
     id,
   ]);
 
+  // Jei PostgreSQL nerado įrašo, grąžiname null
+  if (result.rows.length === 0) {
+    return null;
+  }
+
   return result.rows[0];
 };
 
@@ -21,6 +26,11 @@ export const findByName = async (name) => {
   const result = await pool.query("SELECT id FROM categories WHERE name = $1", [
     name,
   ]);
+
+  // Jei PostgreSQL nerado kategorijos, grąžiname null
+  if (result.rows.length === 0) {
+    return null;
+  }
 
   return result.rows[0];
 };
@@ -42,6 +52,11 @@ export const update = async (id, name) => {
     [name, id],
   );
 
+  // Jei PostgreSQL neatnaujino nė vieno įrašo, grąžiname null
+  if (result.rows.length === 0) {
+    return null;
+  }
+
   return result.rows[0];
 };
 
@@ -51,6 +66,11 @@ export const remove = async (id) => {
     "DELETE FROM categories WHERE id = $1 RETURNING *",
     [id],
   );
+
+  // Jei PostgreSQL nepašalino nė vieno įrašo, grąžiname null
+  if (result.rows.length === 0) {
+    return null;
+  }
 
   return result.rows[0];
 };

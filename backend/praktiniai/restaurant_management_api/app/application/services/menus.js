@@ -6,11 +6,9 @@ import {
   update,
 } from "../../infrastructure/database/repositories/menus.js";
 
-import { findByName as findCategoryByName } from "../../infrastructure/database/repositories/categories.js";
-
-// Gauname visus meniu elementus
-export const getMenuItems = async () => {
-  return await findAll();
+// Gauname meniu elementus pagal perduotus filtrus
+export const getMenuItems = async (filters) => {
+  return await findAll(filters);
 };
 
 // Gauname vieną meniu elementą pagal ID
@@ -20,16 +18,35 @@ export const getMenuItemById = async (id) => {
 
 // Sukuriame naują meniu elementą
 export const createMenuItem = async (menuItem) => {
-  const category = await findCategoryByName(menuItem.category);
+  try {
+    return await create({
+      name: menuItem.name,
+      categoryId: menuItem.categoryId,
+      price: menuItem.price,
+      available: menuItem.available,
+    });
+  } catch (err) {
+    // Apdorojame neegzistuojančios kategorijos klaidą
+    if (err.code === "23503") {
+      const error = new Error("Category does not exist.");
+      error.code = "INVALID_CATEGORY";
+      error.status = 400;
 
-  return await create({
-    name: menuItem.name,
-    categoryId: category.id,
-    price: menuItem.price,
-    available: menuItem.available,
-  });
+      throw error;
+    }
+
+    // Apdorojame netinkamos kainos CHECK constraint klaidą
+    if (err.code === "23514") {
+      const error = new Error("Price must be greater than zero.");
+      error.code = "INVALID_PRICE";
+      error.status = 400;
+
+      throw error;
+    }
+
+    throw err;
+  }
 };
-
 // Atnaujiname meniu elementą pagal ID
 export const updateMenuItem = async (id, menuItem) => {
   return await update(id, menuItem);
