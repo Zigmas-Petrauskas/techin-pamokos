@@ -6,6 +6,19 @@ import {
   updateCategory as updateCategoryService,
 } from "../../application/services/categories.js";
 
+import {
+  validateCategoryBody,
+  validateCategoryParams,
+} from "../schemas/categories.js";
+
+// Sukuriame klaidą pagal pirmą AJV validacijos rezultatą
+const createValidationError = (errors) => {
+  const error = new Error(errors[0].message);
+  error.status = 400;
+
+  return error;
+};
+
 // Gauname visas kategorijas
 export const getCategories = async (req, res) => {
   const categories = await getCategoriesService();
@@ -15,15 +28,12 @@ export const getCategories = async (req, res) => {
 
 // Gauname vieną kategoriją pagal ID
 export const getCategoryById = async (req, res, next) => {
-  const { id } = req.params;
-
-  // Tikriname, ar ID yra skaičius
-  if (Number.isNaN(Number(id))) {
-    const error = new Error("ID must be a number");
-    error.status = 400;
-
-    return next(error);
+  // Tikriname route parametrus pagal AJV schemą
+  if (!validateCategoryParams(req.params)) {
+    return next(createValidationError(validateCategoryParams.errors));
   }
+
+  const { id } = req.params;
 
   const category = await getCategoryByIdService(id);
 
@@ -36,14 +46,9 @@ export const getCategoryById = async (req, res, next) => {
 
 // Sukuriame naują kategoriją
 export const createCategory = async (req, res, next) => {
-  const { name } = req.body;
-
-  // Tikriname kategorijos pavadinimą
-  if (typeof name !== "string" || name.trim() === "") {
-    const error = new Error("Name is required");
-    error.status = 400;
-
-    return next(error);
+  // Tikriname request body pagal AJV schemą
+  if (!validateCategoryBody(req.body)) {
+    return next(createValidationError(validateCategoryBody.errors));
   }
 
   const category = await createCategoryService(req.body);
@@ -53,24 +58,17 @@ export const createCategory = async (req, res, next) => {
 
 // Atnaujiname kategoriją pagal ID
 export const updateCategory = async (req, res, next) => {
+  // Tikriname route parametrus pagal AJV schemą
+  if (!validateCategoryParams(req.params)) {
+    return next(createValidationError(validateCategoryParams.errors));
+  }
+
+  // Tikriname request body pagal AJV schemą
+  if (!validateCategoryBody(req.body)) {
+    return next(createValidationError(validateCategoryBody.errors));
+  }
+
   const { id } = req.params;
-  const { name } = req.body;
-
-  // Tikriname, ar ID yra skaičius
-  if (Number.isNaN(Number(id))) {
-    const error = new Error("ID must be a number");
-    error.status = 400;
-
-    return next(error);
-  }
-
-  // Tikriname kategorijos pavadinimą
-  if (typeof name !== "string" || name.trim() === "") {
-    const error = new Error("Name is required");
-    error.status = 400;
-
-    return next(error);
-  }
 
   const category = await updateCategoryService(id, req.body);
 
@@ -83,15 +81,12 @@ export const updateCategory = async (req, res, next) => {
 
 // Pašaliname kategoriją pagal ID
 export const deleteCategory = async (req, res, next) => {
-  const { id } = req.params;
-
-  // Tikriname, ar ID yra skaičius
-  if (Number.isNaN(Number(id))) {
-    const error = new Error("ID must be a number");
-    error.status = 400;
-
-    return next(error);
+  // Tikriname route parametrus pagal AJV schemą
+  if (!validateCategoryParams(req.params)) {
+    return next(createValidationError(validateCategoryParams.errors));
   }
+
+  const { id } = req.params;
 
   const category = await deleteCategoryService(id);
 
