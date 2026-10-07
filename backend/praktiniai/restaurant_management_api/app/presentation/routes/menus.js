@@ -8,12 +8,20 @@ import {
   updateMenuItem,
 } from "../controllers/menus.js";
 
-const router = express.Router();
+// Pakeista: authenticate middleware gauname per DI,
+// nes routeris pats neturi kurti autentifikavimo priklausomybės.
+export const createMenusRouter = (authenticate) => {
+  const router = express.Router();
 
-router.get("/", getMenuItems);
-router.get("/:id", getMenuItemById);
-router.post("/", createMenuItem);
-router.put("/:id", updateMenuItem);
-router.delete("/:id", deleteMenuItem);
+  // GET endpointai lieka vieši pagal užduoties reikalavimą.
+  router.get("/", getMenuItems);
+  router.get("/:id", getMenuItemById);
 
-export default router;
+  // Pakeista: meniu duomenis keičiančios operacijos apsaugomos
+  // authenticate middleware ir pasiekiamos tik prisijungusiam vartotojui.
+  router.post("/", authenticate, createMenuItem);
+  router.put("/:id", authenticate, updateMenuItem);
+  router.delete("/:id", authenticate, deleteMenuItem);
+
+  return router;
+};
