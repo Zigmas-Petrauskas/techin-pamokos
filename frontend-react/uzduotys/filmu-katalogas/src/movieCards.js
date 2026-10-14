@@ -8,6 +8,8 @@ export const renderMovies = (movies) => {
     .map(({ id, title, year, genre, rating }) => {
       const isFavorite = favorites.includes(id);
 
+      // Unicode simboliai: ★ (U+2605), ☆ (U+2606).
+      // Šaltinis: https://symbl.cc/en/unicode-table/
       return `
         <article class="movie-card" data-id="${id}">
           <h3 class="movie-title">${title}</h3>
