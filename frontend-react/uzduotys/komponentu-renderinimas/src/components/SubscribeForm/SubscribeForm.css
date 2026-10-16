@@ -1,0 +1,66 @@
+/* Prenumeratos forma */
+.subscribe {
+    width: 100%;
+    max-width: 1160px;
+    padding: 40px 24px;
+    border-radius: 16px;
+    background-color: #c4e8f5;
+    text-align: center;
+}
+
+.subscribe h1 {
+    margin: 0 0 32px;
+    font-size: 26px;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.subscribe-description {
+    margin: 0 0 44px;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+}
+
+/* Įvedimo laukeliai */
+.subscribe-form {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 160px));
+    justify-content: center;
+    gap: 12px;
+}
+
+.subscribe-form input {
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #ffffff;
+    font: inherit;
+    font-size: 13px;
+}
+
+.subscribe-form input:focus {
+    outline: 2px solid #2196f3;
+}
+
+/* Prenumeratos mygtukas */
+.subscribe-form button {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: 250px;
+    max-width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #f4777c;
+    color: #ffffff;
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.subscribe-form button:hover {
+    background-color: #e66469;
+}
