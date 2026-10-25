@@ -1,0 +1,28 @@
+.color-stripes {
+  width: 100%;
+  max-width: 1270px;
+  margin: 0 auto;
+}
+
+.color-stripes h1 {
+  margin-bottom: 20px;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.color-stripes-container {
+  padding: 20px 32px;
+  background-color: #fff;
+}
+
+.color-stripe {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 22px;
+  font-weight: bold;
+}
