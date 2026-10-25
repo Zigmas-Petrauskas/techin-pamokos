@@ -1,0 +1,42 @@
+.currency {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 25px;
+  background-color: #f9f4f4;
+}
+
+.currency-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: center;
+}
+
+.currency-table th {
+  padding: 14px;
+  background-color: #a64d7e;
+  color: #fff;
+  font-size: 30px;
+  font-weight: 400;
+}
+
+.currency-table td {
+  height: 59px;
+  padding: 10px;
+  color: #000;
+  font-size: 28px;
+  font-weight: 300;
+}
+
+.currency-table th,
+.currency-table td {
+  border: 1px solid #fff;
+}
+
+.currency-table tbody tr:nth-child(odd) {
+  background-color: #ead6e1;
+}
+
+.currency-table tbody tr:nth-child(even) {
+  background-color: #dbb5ca;
+}
