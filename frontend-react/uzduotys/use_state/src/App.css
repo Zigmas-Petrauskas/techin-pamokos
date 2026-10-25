@@ -1,0 +1,682 @@
+.app {
+  max-width: 90rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem;
+}
+
+.app h1 {
+  margin-bottom: 1.875rem;
+  text-align: center;
+}
+
+/* Bendras pratimų išdėstymas */
+.exercises-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+/* Vertikaliai išdėstytos kortelės */
+.exercises-stacked {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  min-width: 0;
+}
+
+/* Devintosios ir dešimtosios užduočių pora */
+.exercises-pair {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+  min-width: 0;
+}
+
+/* Bendri visų pratimų kortelių stiliai */
+.counter,
+.toggle,
+.dynamic-input,
+.show-hide,
+.form-state,
+.multiple-counters,
+.todo-list,
+.like-dislike,
+.tab-navigation,
+.dynamic-background {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  min-height: 15.625rem;
+  padding: 1.5625rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  text-align: center;
+}
+
+/* Ketvirtosios ir šeštosios kortelių aukščiai */
+.exercises-stacked .show-hide {
+  flex: 0 0 12.5rem;
+  min-height: 0;
+}
+
+.exercises-stacked .multiple-counters {
+  flex: 1;
+  min-height: 0;
+  padding: 1.25rem;
+}
+
+/* Septintosios ir aštuntosios kortelių aukščiai */
+.exercises-stacked .todo-list {
+  flex: 1;
+  min-height: 12.5rem;
+}
+
+.exercises-stacked .like-dislike {
+  flex: 0 0 auto;
+  min-height: 12.5rem;
+}
+
+.exercise-number {
+  color: #777;
+  font-size: 0.8125rem;
+}
+
+.counter h2,
+.toggle h2,
+.dynamic-input h2,
+.show-hide h2,
+.form-state h2,
+.multiple-counters h2,
+.todo-list h2,
+.like-dislike h2,
+.tab-navigation h2,
+.dynamic-background h2 {
+  margin: 0.75rem 0 1.25rem;
+  font-size: 1.375rem;
+}
+
+/* Pirmosios užduoties skaitiklis */
+.counter p {
+  margin: 0 0 1.5625rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.counter-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.9375rem;
+}
+
+.counter-buttons button,
+.show-hide button,
+.counter-actions button,
+.reset-button {
+  padding: 0.625rem 1.25rem;
+  border: none;
+  border-radius: 0.3125rem;
+  background-color: #2563eb;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Antrosios užduoties mygtukas */
+.toggle-button {
+  min-width: 6.25rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.3125rem;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.toggle-button-on {
+  background-color: #15803d;
+}
+
+.toggle-button-off {
+  background-color: #dc2626;
+}
+
+/* Trečiosios užduoties įvedimo laukas */
+.dynamic-input label {
+  margin-bottom: 0.625rem;
+  font-size: 0.875rem;
+}
+
+.dynamic-input input {
+  width: 100%;
+  max-width: 18.75rem;
+  padding: 0.625rem;
+  border: 1px solid #ccc;
+  border-radius: 0.3125rem;
+  font-size: 0.875rem;
+}
+
+.dynamic-input p {
+  margin-top: 1.25rem;
+  font-size: 1.125rem;
+  font-weight: bold;
+}
+
+/* Ketvirtosios užduoties tekstas */
+.show-hide p {
+  margin-top: 1.25rem;
+  font-size: 1rem;
+}
+
+/* Penktosios užduoties registracijos forma */
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 20rem;
+  gap: 0.5rem;
+  text-align: left;
+}
+
+.registration-form label {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.registration-form input {
+  width: 100%;
+  padding: 0.625rem;
+  border: 1px solid #ccc;
+  border-radius: 0.3125rem;
+  font-size: 0.875rem;
+}
+
+.form-preview {
+  width: 100%;
+  max-width: 20rem;
+  margin-top: 1.25rem;
+  padding: 0.9375rem;
+  border-radius: 0.3125rem;
+  background-color: #f5f5f5;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.form-preview h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+}
+
+.form-preview p {
+  margin: 0.5rem 0;
+  font-size: 0.875rem;
+}
+
+/* Šeštosios užduoties skaitikliai */
+.counters-container {
+  display: flex;
+  justify-content: center;
+  gap: 0.9375rem;
+  width: 100%;
+}
+
+.counter-item {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+  min-width: 0;
+  padding: 0.75rem 0.3125rem;
+  border: 1px solid #ddd;
+  border-radius: 0.3125rem;
+}
+
+.counter-item h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.counter-item p {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+
+.counter-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.counter-actions button {
+  padding: 0.5rem 0.625rem;
+  font-size: 0.75rem;
+}
+
+.reset-button {
+  margin-top: 0.9375rem;
+}
+
+/* Septintosios užduoties sąrašas */
+.todo-form {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.todo-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.3125rem;
+  font-size: 0.875rem;
+}
+
+.todo-form button,
+.todo-items button {
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 0.3125rem;
+  background-color: #2563eb;
+  color: #fff;
+  cursor: pointer;
+}
+
+.todo-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.todo-items li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.375rem 0.625rem;
+  border-radius: 0.3125rem;
+  background-color: #f5f5f5;
+  text-align: left;
+}
+
+.todo-items li span {
+  overflow-wrap: anywhere;
+}
+
+/* Aštuntosios užduoties mygtukai */
+.reactions {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.reaction-item {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9375rem;
+}
+
+.reaction-item p {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+
+.like-button,
+.dislike-button {
+  min-width: 6.25rem;
+  padding: 0.625rem 1.25rem;
+  border: none;
+  border-radius: 0.3125rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.like-button {
+  background-color: #15803d;
+}
+
+.dislike-button {
+  background-color: #dc2626;
+}
+
+/* Devintosios užduoties skirtukai */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.tab-button {
+  padding: 0.625rem 0.9375rem;
+  border: none;
+  border-radius: 0.3125rem;
+  background-color: #e5e7eb;
+  color: #222;
+  cursor: pointer;
+}
+
+.tab-active {
+  background-color: #2563eb;
+  color: #fff;
+}
+
+.tab-content {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 0.3125rem;
+  background-color: #f5f5f5;
+}
+
+.tab-content p {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+/* Dešimtosios užduoties spalvų pasirinkimas */
+.dynamic-background label {
+  margin-bottom: 0.625rem;
+  font-size: 0.875rem;
+}
+
+.dynamic-background select {
+  width: 100%;
+  max-width: 12.5rem;
+  padding: 0.625rem;
+  border: 1px solid #ccc;
+  border-radius: 0.3125rem;
+  background-color: #fff;
+  font-size: 0.875rem;
+}
+
+.color-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 5rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 0.3125rem;
+}
+
+.color-preview p {
+  margin: 0;
+  color: #222;
+  font-size: 1rem;
+}
+
+/* Vienuoliktosios ir dvyliktosios užduočių kortelės */
+.counter-limits,
+.timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  min-height: 15.625rem;
+  padding: 1.5625rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  text-align: center;
+}
+
+.counter-limits h2,
+.timer h2 {
+  margin: 0.75rem 0 1.25rem;
+  font-size: 1.375rem;
+}
+
+.counter-limits p,
+.timer p {
+  margin: 0 0 1.5625rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Vienuoliktosios užduoties mygtukai */
+.limits-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.limits-buttons button,
+.timer-buttons button {
+  padding: 0.625rem 1.25rem;
+  border: none;
+  border-radius: 0.3125rem;
+  background-color: #2563eb;
+  color: #fff;
+  cursor: pointer;
+}
+
+.limits-buttons button:disabled,
+.timer-buttons button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Dvyliktosios užduoties laikmačio mygtukai */
+.timer-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+/* Tryliktosios užduoties kortelė */
+.shopping-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  min-height: 15.625rem;
+  padding: 1.5625rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  text-align: center;
+}
+
+.shopping-cart h2 {
+  margin: 0.75rem 0 1.25rem;
+  font-size: 1.375rem;
+}
+
+/* Prekių sąrašas */
+.shopping-products {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.shopping-product {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.3125rem;
+  background-color: #f5f5f5;
+}
+
+.shopping-product-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.shopping-product-info span:first-child {
+  font-weight: bold;
+}
+
+.shopping-product button {
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 0.3125rem;
+  background-color: #2563eb;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Krepšelio suvestinė */
+.cart-summary {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 0.3125rem;
+  background-color: #f5f5f5;
+  text-align: left;
+}
+
+.cart-summary h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+}
+
+.cart-summary p {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+  font-size: 0.875rem;
+}
+
+/* Keturioliktosios ir penkioliktosios užduočių kortelės */
+.derived-state,
+.counter-history {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  min-height: 15.625rem;
+  padding: 1.5625rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  text-align: center;
+}
+
+.derived-state h2,
+.counter-history h2 {
+  margin: 0.75rem 0 1.25rem;
+  font-size: 1.375rem;
+}
+
+/* Keturioliktosios užduoties įvedimo laukai */
+.discount-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 20rem;
+  text-align: left;
+}
+
+.discount-form label {
+  font-size: 0.875rem;
+}
+
+.discount-form input {
+  width: 100%;
+  padding: 0.625rem;
+  border: 1px solid #ccc;
+  border-radius: 0.3125rem;
+  font-size: 0.875rem;
+}
+
+/* Apskaičiuotos kainos rezultatas */
+.discount-result {
+  width: 100%;
+  max-width: 20rem;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 0.3125rem;
+  background-color: #f5f5f5;
+  text-align: left;
+}
+
+.discount-result p {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+  font-size: 0.875rem;
+}
+
+/* Penkioliktosios užduoties skaitiklis */
+.history-count {
+  margin: 0 0 1.5625rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.history-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.history-buttons button {
+  padding: 0.625rem 1.25rem;
+  border: none;
+  border-radius: 0.3125rem;
+  background-color: #2563eb;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Ankstesnių reikšmių istorija */
+.history-container {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 0.3125rem;
+  background-color: #f5f5f5;
+}
+
+.history-container h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+}
+
+.history-container p {
+  margin: 0;
+  color: #777;
+  font-size: 0.875rem;
+}
+
+.history-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.history-list li {
+  min-width: 2rem;
+  padding: 0.375rem 0.625rem;
+  border-radius: 0.3125rem;
+  background-color: #e5e7eb;
+  font-size: 0.875rem;
+}
