@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { schemaYoutube } from "./form_validation_schema";
+import postData from "../../services/post";
 
 function YoutubeFrom() {
   const {
@@ -28,9 +29,9 @@ function YoutubeFrom() {
     resolver: zodResolver(schemaYoutube),
   });
 
-  // Formos duomenys yra objektas.
-  const formSubmitHandler = (formDataObject) => {
-    console.log(formDataObject);
+  // Formos duomenis apdorojamti funkcija
+  const formSubmitHandler = async (formDataObject) => {
+    await postData(formDataObject);
     reset();
   };
 
