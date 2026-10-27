@@ -1,3 +1,44 @@
 {
-  "users": []
+  "users": [
+    {
+      "username": "Zigmas",
+      "email": "zigmas.1@gmail.com",
+      "channel": "Kevin Powell",
+      "favColor": "green",
+      "hobbies": ["Reading", "Traveling", "Cooking"],
+      "password": "Kaunas12",
+      "confirmPassword": "Kaunas12",
+      "id": "bOLz-uwFGDg"
+    },
+    {
+      "username": "Zigmas",
+      "email": "zigmas.1@gmail.com",
+      "channel": "Code with Ania Kubow",
+      "favColor": "red",
+      "hobbies": ["Traveling"],
+      "password": "Kaunas12",
+      "confirmPassword": "Kaunas12",
+      "id": "HSsFuncjVYI"
+    },
+    {
+      "username": "Zigmas",
+      "email": "zigmas.1@gmail.com",
+      "channel": "Net Ninja",
+      "favColor": "blue",
+      "hobbies": ["Traveling"],
+      "password": "Kaunas12",
+      "confirmPassword": "Kaunas12",
+      "id": "D5b9HZQoUgQ"
+    },
+    {
+      "username": "Zigmas",
+      "email": "zigmas.1@gmail.com",
+      "channel": "Code with Ania Kubow",
+      "favColor": "green",
+      "hobbies": ["Reading", "Traveling"],
+      "password": "Makaronas30",
+      "confirmPassword": "Makaronas30",
+      "id": "fN0e5Qr"
+    }
+  ]
 }

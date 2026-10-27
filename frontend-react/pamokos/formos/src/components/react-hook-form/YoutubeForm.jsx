@@ -8,6 +8,7 @@ function YoutubeFrom() {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
     getValues, // Nuskaito formos lauko reikšmę.
     trigger, // Paleidžia formos lauko validaciją.
@@ -33,9 +34,11 @@ function YoutubeFrom() {
     await postData(formDataObject);
     reset();
   };
-
   // Realiu laiku stebimos formos laukų reikšmės.
-  const { username, email, hobbies } = useWatch();
+  const [username, email, hobbies] = useWatch({
+    control,
+    name: ["username", "email", "hobbies"],
+  });
 
   return (
     <form onSubmit={handleSubmit(formSubmitHandler)} noValidate>
