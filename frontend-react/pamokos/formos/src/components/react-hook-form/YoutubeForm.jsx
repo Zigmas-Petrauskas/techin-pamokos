@@ -1,4 +1,6 @@
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { schemaYoutube } from "./form_validation_schema";
 
 function YoutubeFrom() {
   const {
@@ -7,20 +9,32 @@ function YoutubeFrom() {
     reset,
     watch,
     formState: { errors },
+    getValues, // Nuskaito formos lauko reikšmę.
+    trigger, // Paleidžia formos lauko validaciją.
   } = useForm({
+    mode: "onBlur", // Laukai validuojami praradus fokusą.
+    reValidateMode: "onChange",
     defaultValues: {
       username: "",
       email: "",
-      cahnnel: "",
-      favColor: null, // nepasirinkta spalva
+      channel: "",
+      favColor: null, // Nepasirinkta spalva.
       hobbies: [],
+      password: "",
+      confirmPassword: "",
     },
+
+    // Resolver prijungia Zod prie React Hook Form.
+    resolver: zodResolver(schemaYoutube),
   });
-  //formos duomenys yra objektas
+
+  // Formos duomenys yra objektas.
   const formSubmitHandler = (formDataObject) => {
     console.log(formDataObject);
+    reset();
   };
 
+  // Realiu laiku stebimos formos laukų reikšmės.
   const { username, email, hobbies } = watch();
 
   return (
@@ -34,6 +48,7 @@ function YoutubeFrom() {
           className="border"
           {...register("username")}
         />
+        <div className="text-red-500">{errors.username?.message}</div>
       </div>
 
       <div>
@@ -45,6 +60,7 @@ function YoutubeFrom() {
           className="border"
           {...register("email")}
         />
+        <div className="text-red-500">{errors.email?.message}</div>
       </div>
 
       <div>
@@ -58,6 +74,7 @@ function YoutubeFrom() {
             <option value="Net Ninja">Net Ninja</option>
           </select>
         </label>
+        <div className="text-red-500">{errors.channel?.message}</div>
       </div>
 
       <div>
@@ -75,9 +92,9 @@ function YoutubeFrom() {
         <label>
           <input
             type="radio"
-            name="favColor"
             value="green"
             className="border"
+            {...register("favColor")}
           />
           Green
         </label>
@@ -91,6 +108,7 @@ function YoutubeFrom() {
           />
           Blue
         </label>
+        <div className="text-red-500">{errors.favColor?.message}</div>
       </div>
 
       <div>
@@ -98,7 +116,6 @@ function YoutubeFrom() {
         <label>
           <input
             type="checkbox"
-
             value="Reading"
             className="border"
             {...register("hobbies")}
@@ -109,7 +126,6 @@ function YoutubeFrom() {
         <label>
           <input
             type="checkbox"
-
             value="Traveling"
             className="border"
             {...register("hobbies")}
@@ -120,19 +136,51 @@ function YoutubeFrom() {
         <label>
           <input
             type="checkbox"
-
             value="Cooking"
             className="border"
             {...register("hobbies")}
           />
           Cooking
         </label>
+        <div className="text-red-500">{errors.hobbies?.message}</div>
       </div>
 
-      <input type="submit" value="Submit" />
+      <div>
+        <label htmlFor="password">Password:</label>
+        <br />
+        <input
+          type="password"
+          id="password"
+          className="border"
+          {...register("password", {
+            onChange: () => {
+              // Keičiant slaptažodį, pertikrinamas ir jo patvirtinimas.
+              if (getValues("confirmPassword")) trigger("confirmPassword");
+            },
+          })}
+        />
+        <div className="error text-red-500">{errors.password?.message}</div>
+      </div>
+
+      <div>
+        <label htmlFor="confirmPassword">Confirm password:</label>
+        <br />
+        <input
+          type="password"
+          id="confirmPassword"
+          className="border"
+          {...register("confirmPassword")}
+        />
+        <div className="error text-red-500">
+          {errors.confirmPassword?.message}
+        </div>
+      </div>
+
+      <input type="submit" value="Submit" className="mt-2 bg-blue-300 p-1" />
 
       {/* Stebimos formos laukų reikšmės. */}
-      <div className="mt-4">
+      <div className="mt-4 font-medium">Form data:</div>
+      <div className="mt-2">
         <p>Username: {username}</p>
         <p>Email: {email}</p>
         <p>Hobbies: {hobbies.join(", ")}</p>
