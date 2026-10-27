@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { schemaYoutube } from "./form_validation_schema";
 import postData from "../../services/post";
@@ -8,7 +8,6 @@ function YoutubeFrom() {
     register,
     handleSubmit,
     reset,
-    watch,
     formState: { errors },
     getValues, // Nuskaito formos lauko reikšmę.
     trigger, // Paleidžia formos lauko validaciją.
@@ -36,7 +35,7 @@ function YoutubeFrom() {
   };
 
   // Realiu laiku stebimos formos laukų reikšmės.
-  const { username, email, hobbies } = watch();
+  const { username, email, hobbies } = useWatch();
 
   return (
     <form onSubmit={handleSubmit(formSubmitHandler)} noValidate>
