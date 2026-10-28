@@ -1,4 +1,4 @@
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { schemaYoutube } from "./form_validation_schema";
 import postData from "../../services/post";
@@ -8,7 +8,7 @@ function YoutubeFrom() {
     register,
     handleSubmit,
     reset,
-    control,
+    //control,
     formState: { errors },
     getValues, // Nuskaito formos lauko reikšmę.
     trigger, // Paleidžia formos lauko validaciją.
@@ -29,16 +29,17 @@ function YoutubeFrom() {
     resolver: zodResolver(schemaYoutube),
   });
 
-  // Formos duomenis apdorojamti funkcija
+  // Formos duomenis apdorojanti funkcija
   const formSubmitHandler = async (formDataObject) => {
-    await postData(formDataObject);
+    await postData({ ...formDataObject, likes: 0 });
     reset();
   };
+
   // Realiu laiku stebimos formos laukų reikšmės.
-  const [username, email, hobbies] = useWatch({
-    control,
-    name: ["username", "email", "hobbies"],
-  });
+  //const [username, email, hobbies] = useWatch({
+  //control,
+  //name: ["username", "email", "hobbies"],
+  //});
 
   return (
     <form onSubmit={handleSubmit(formSubmitHandler)} noValidate>
@@ -181,13 +182,13 @@ function YoutubeFrom() {
 
       <input type="submit" value="Submit" className="mt-2 bg-blue-300 p-1" />
 
-      {/* Stebimos formos laukų reikšmės. */}
+      {/* Stebimos formos laukų reikšmės.
       <div className="mt-4 font-medium">Form data:</div>
       <div className="mt-2">
         <p>Username: {username}</p>
         <p>Email: {email}</p>
         <p>Hobbies: {hobbies.join(", ")}</p>
-      </div>
+      </div>  */}
     </form>
   );
 }
