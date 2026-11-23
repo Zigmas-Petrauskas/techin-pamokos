@@ -19,7 +19,7 @@ export const findById = async (id) => {
 // Gauname vartotoją pagal el. pašto adresą
 export const findByEmail = async (email) => {
   const result = await pool.query(
-    "SELECT id, email, password FROM users WHERE email = $1",
+    "SELECT id, email, password_hash FROM users WHERE email = $1",
     [email],
   );
 
@@ -28,13 +28,13 @@ export const findByEmail = async (email) => {
 
 // Sukuriame naują vartotoją
 export const create = async (user) => {
-  const { email, password } = user;
+  const { email, password_hash } = user;
 
   const result = await pool.query(
-    `INSERT INTO users (email, password)
+    `INSERT INTO users (email, password_hash)
      VALUES ($1, $2)
      RETURNING id, email`,
-    [email, password],
+    [email, password_hash],
   );
 
   return result.rows[0];
@@ -42,15 +42,29 @@ export const create = async (user) => {
 
 // Atnaujiname vartotoją
 export const update = async (id, user) => {
-  const { email, password } = user;
+  const { email, password_hash } = user;
 
+  // Jei slaptažodis nekeičiamas, atnaujiname tik el. paštą
+  if (password_hash === undefined) {
+    const result = await pool.query(
+      `UPDATE users
+       SET email = $1
+       WHERE id = $2
+       RETURNING id, email`,
+      [email, id],
+    );
+
+    return result.rows[0];
+  }
+
+  // Jei slaptažodis keičiamas, išsaugome naują hashą
   const result = await pool.query(
     `UPDATE users
      SET email = $1,
-         password = $2
+         password_hash = $2
      WHERE id = $3
      RETURNING id, email`,
-    [email, password, id],
+    [email, password_hash, id],
   );
 
   return result.rows[0];

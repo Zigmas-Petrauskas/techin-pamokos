@@ -32,6 +32,18 @@ const userBodySchema = {
   },
 };
 
+// Atnaujinant vartotoją slaptažodis nėra privalomas
+const updateUserBodySchema = {
+  ...userBodySchema,
+  required: ["email"],
+  errorMessage: {
+    required: {
+      email: "Email is required",
+    },
+    additionalProperties: "Additional properties are not allowed",
+  },
+};
+
 // Vartotojo route parametro ID validacijos schema
 const userParamsSchema = {
   type: "object",
@@ -57,4 +69,5 @@ const userParamsSchema = {
 
 // Schemas sukompiliuojame vieną kartą
 export const validateUserBody = ajv.compile(userBodySchema);
+export const validateUpdateUserBody = ajv.compile(updateUserBodySchema);
 export const validateUserParams = ajv.compile(userParamsSchema);

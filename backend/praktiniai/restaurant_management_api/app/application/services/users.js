@@ -1,3 +1,4 @@
+import argon2 from "argon2";
 import {
   create,
   findAll,
@@ -31,13 +32,21 @@ export const createUser = async (user) => {
     throw error;
   }
 
-  return await create(user);
+  // sugeneruojamas slaptažodžio hash
+  const passwordHash = await argon2.hash(user.password, {
+    type: argon2.argon2id,
+  });
+
+  return await create({
+    ...user,
+    password: undefined,
+    password_hash: passwordHash,
+  });
 };
 
 // Atnaujiname vartotoją
 export const updateUser = async (id, user) => {
-  // Pakeista: pirmiausia tikriname, ar vartotojas egzistuoja,
-  // kad neegzistuojantį vartotoją galėtume atskirti nuo el. pašto konflikto.
+  //pirmiausia tikriname, ar vartotojas egzistuoja,
   const currentUser = await findById(id);
 
   if (!currentUser) {
@@ -56,7 +65,17 @@ export const updateUser = async (id, user) => {
     throw error;
   }
 
-  return await update(id, user);
+  const updateUser = { email: user.email };
+
+  // jei pateiktas naujas slaptažodis, sugeneruojamas naujas hash
+  if (user.password !== undefined) {
+    updateUser.password_hash = await argon2.hash(user.password, {
+      type: argon2.argon2id,
+    });
+  }
+
+  // Repository perduodame hashą, išsaugodami ankstesnį, jeigu slaptažodis nebuvo keičiamas
+  return await update(id, updateUser);
 };
 
 // Pašaliname vartotoją

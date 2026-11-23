@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import config from "../../core/config.js";
+import argon2 from "argon2";
 
 // Sukuriame autentifikavimo service ir priklausomybes gauname per DI
 export const createAuthenticationService = (usersRepository) => {
@@ -7,8 +8,16 @@ export const createAuthenticationService = (usersRepository) => {
   const login = async (email, password) => {
     const user = await usersRepository.findByEmail(email);
 
-    // Abiem neteisingo prisijungimo atvejais grąžiname tą patį rezultatą
-    if (!user || user.password !== password) {
+    // Jei vartotojas neegzistuoja, autentifikavimas nepavyksta
+    if (!user) {
+      return null;
+    }
+
+    // Patikriname slaptažodį pagal duomenų bazėje saugomą Argon2id hashą
+    const isPasswordValid = await argon2.verify(user.password_hash, password);
+
+    // Jei slaptažodis neteisingas, autentifikavimas nepavyksta
+    if (!isPasswordValid) {
       return null;
     }
 
@@ -25,7 +34,7 @@ export const createAuthenticationService = (usersRepository) => {
       },
     );
 
-    // Slaptažodžio negrąžiname į controller
+    // Slaptažodžio ir jo hash negrąžiname į controller
     return {
       token,
       user: {

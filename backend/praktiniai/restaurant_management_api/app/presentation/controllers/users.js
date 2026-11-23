@@ -6,7 +6,11 @@ import {
   updateUser as updateUserService,
 } from "../../application/services/users.js";
 
-import { validateUserBody, validateUserParams } from "../schemas/users.js";
+import {
+  validateUpdateUserBody,
+  validateUserBody,
+  validateUserParams,
+} from "../schemas/users.js";
 
 // Sukuriame klaidą pagal pirmą AJV validacijos rezultatą
 const createValidationError = (errors) => {
@@ -73,9 +77,9 @@ export const updateUser = async (req, res, next) => {
     return next(createValidationError(validateUserParams.errors));
   }
 
-  // Tikriname request body pagal AJV schemą
-  if (!validateUserBody(req.body)) {
-    return next(createValidationError(validateUserBody.errors));
+  // Tikriname atnaujinimo duomenis, slaptažodis neprivalomas
+  if (!validateUpdateUserBody(req.body)) {
+    return next(createValidationError(validateUpdateUserBody.errors));
   }
 
   const { id } = req.params;
