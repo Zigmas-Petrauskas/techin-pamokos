@@ -22,6 +22,9 @@ const config = {
     user: process.env.PGUSER,
     password: process.env.PGPASSWORD,
   },
+  auth: {
+    jwtSecret: process.env.JWT_SECRET,
+  },
 };
 
 export default config;

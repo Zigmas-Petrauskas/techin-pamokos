@@ -1,37 +1,53 @@
 import js from "@eslint/js";
+import prettier from "eslint-config-prettier";
 import globals from "globals";
-import { defineConfig } from "eslint/config";
-import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
+import prettierPlugin from "eslint-plugin-prettier";
 
-export default defineConfig([
+export default [
   {
-    files: ["**/*.{js,mjs,cjs}"],
-    plugins: { js },
-    extends: ["js/recommended"],
-    languageOptions: { globals: globals.node },
+    ignores: ["node_modules/**"],
+  },
+
+  js.configs.recommended,
+
+  {
+    files: ["**/*.js"],
+
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      globals: {
+        ...globals.node,
+      },
+    },
+
+    plugins: {
+      prettier: prettierPlugin,
+    },
 
     rules: {
-      "no-unused-vars": "warn",
-      eqeqeq: "error",
+      ...prettier.rules,
+
+      "prettier/prettier": "error",
+
+      "no-unused-vars": [
+        "warn",
+        {
+          argsIgnorePattern: "^_",
+        },
+      ],
+
+      // Reikalaujami griežti palyginimai, išskyrus null tikrinimą
+      eqeqeq: [
+        "error",
+        "always",
+        {
+          null: "ignore",
+        },
+      ],
+
+      // Reikalaujami riestiniai skliaustai if, else ir cikluose
       curly: "error",
     },
   },
-
-  eslintPluginPrettierRecommended,
-
-  {
-    rules: {
-      "prettier/prettier": [
-        "error",
-        {
-          semi: true,
-          singleQuote: false,
-          tabWidth: 2,
-          useTabs: false,
-          trailingComma: "all",
-          printWidth: 80,
-        },
-      ],
-    },
-  },
-]);
+];
