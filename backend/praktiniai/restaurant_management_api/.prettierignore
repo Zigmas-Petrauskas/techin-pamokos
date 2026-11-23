@@ -1,0 +1,14 @@
+
+# Priklausomybės
+node_modules/
+
+# Git
+.git/
+
+# Aplinkos konfigūracija
+.env
+.env.*
+!.env.example
+
+# pnpm užrakintų versijų failas
+pnpm-lock.yaml
