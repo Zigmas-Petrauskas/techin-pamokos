@@ -7,26 +7,40 @@ const userBodySchema = {
     email: {
       type: "string",
       nonEmpty: true,
+      format: "email",
       errorMessage: {
         type: "Email must be a string",
         nonEmpty: "Email cannot be empty",
+        format: "Invalid email format",
       },
     },
     password: {
       type: "string",
       nonEmpty: true,
+      strongPassword: true,
       errorMessage: {
         type: "Password must be a string",
         nonEmpty: "Password cannot be empty",
+        strongPassword: "Password is not strong enough",
+      },
+    },
+    // Tikriname, ar pakartotas slaptažodis sutampa
+    repeatPassword: {
+      type: "string",
+      const: { $data: "1/password" },
+      errorMessage: {
+        type: "Repeat password must be a string",
+        const: "Passwords do not match",
       },
     },
   },
-  required: ["email", "password"],
+  required: ["email", "password", "repeatPassword"],
   additionalProperties: false,
   errorMessage: {
     required: {
       email: "Email is required",
       password: "Password is required",
+      repeatPassword: "Repeat password is required",
     },
     additionalProperties: "Additional properties are not allowed",
   },
@@ -36,6 +50,21 @@ const userBodySchema = {
 const updateUserBodySchema = {
   ...userBodySchema,
   required: ["email"],
+  allOf: [
+    {
+      if: {
+        required: ["password"],
+      },
+      then: {
+        required: ["repeatPassword"],
+        errorMessage: {
+          required: {
+            repeatPassword: "Repeat password is required",
+          },
+        },
+      },
+    },
+  ],
   errorMessage: {
     required: {
       email: "Email is required",
