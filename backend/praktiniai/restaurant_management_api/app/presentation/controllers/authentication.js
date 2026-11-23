@@ -1,3 +1,5 @@
+import config from "../../core/config.js";
+
 // Sukuriame autentifikavimo controller ir service gauname per DI
 export const createAuthenticationController = (authenticationService) => {
   // Prisijungiame naudodami el. paštą ir slaptažodį
@@ -14,10 +16,12 @@ export const createAuthenticationController = (authenticationService) => {
       });
     }
 
-    // Išsaugome sugeneruotą tokeną cookie pavadinimu "token",
-    // kad kitų užklausų metu authenticate middleware galėtų jį perskaityti.
+    // Išsaugome jwt cookie pavadinimu "token",
+    // cookie galioja 1h.
     res.cookie("token", result.token, {
       httpOnly: true,
+      maxAge: 60 * 60 * 1000,
+      secure: config.environment === "production",
     });
 
     // Grąžiname tik vartotojo informaciją be slaptažodžio ir tokeno.
